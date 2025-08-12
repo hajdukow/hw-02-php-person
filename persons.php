@@ -177,13 +177,16 @@ function getGenderDescription($arrayGender) {
     $percentFemale = round(count($filterFemale) / $sum * 100, 1);
     $percentUnknown = round(count($filterUnknown) / $sum  * 100, 1);
 
-    $message = 'Гендерный состав аудитории:' . '<br>';
-    $message .= '--------------------------------------' . '<br>';
-    $message .= 'Мужчины -' . ' ' . $percentMale . '%' . '<br>';
-    $message .= 'Женщины -' . ' ' . $percentFemale . '%' . '<br>';
-    $message .= 'Не удалось определить -' . ' ' . $percentUnknown . '%' . '<br>';
-
-    echo $message;
+    $message = <<<MSG
+    Гендерный состав аудитории:
+    ---------------------------
+    Мужчины - $percentMale%
+    Женщины - $percentFemale%
+    Не удалось определить - $percentUnknown%
+    \n
+    MSG;
+    
+    return $message;
 
 }
 
@@ -224,10 +227,19 @@ function getPerfectPartner(
 
     $randomPercent = number_format($randomPercentSum, 2, '.', '');
 
-    $message2 = '<br>' . $firstPartner . ' ' . '+' . ' ' . $secondPartner . ' ' . '=' . '<br>';
-    $message2 .= '♡ Идеально на' . ' ' . $randomPercent . '% ♡';
+    if ($genderPartner === 0) {
+        $message2 = '⚣ Не удалось подобрать подходящую пару. ⚢';
+    }
 
-    echo $message2;
+    else {
+        $message2 = <<<MSG2
+        $firstPartner + $secondPartner =
+        ♡ Идеально на $randomPercent% ♡
+        \n
+        MSG2;
+    }
+
+    return $message2;
 
 }
 
