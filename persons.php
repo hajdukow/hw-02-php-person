@@ -212,26 +212,26 @@ function getPerfectPartner(
     
     $secondPartner = $arrayPartner[array_rand($arrayPartner)]['fullname'];
     $secondPartner = mb_convert_case(($secondPartner), MB_CASE_TITLE, "UTF-8");
-    $secondPartnerGender = getGenderFromName($secondPartner);
-        
-    while ($genderPartner === $secondPartnerGender || $secondPartnerGender === 0) {
-        $secondPartner = $arrayPartner[array_rand($arrayPartner)]['fullname'];
-        $secondPartner = mb_convert_case(($secondPartner), MB_CASE_TITLE, "UTF-8");
-        $secondPartnerGender = getGenderFromName($secondPartner);
-    }
-     
+    $secondPartnerGender = getGenderFromName($secondPartner);   
+       
     $firstPartner = getShortName($firstPartner);
     $secondPartner = getShortName($secondPartner);
     
-    $randomPercentSum = round(rand(50, 100) + rand(0, 99) * 0.01, 2);
-
+    $randomPercentSum = round(rand(50, 99) + rand(0, 99) * 0.01, 2);
     $randomPercent = number_format($randomPercentSum, 2, '.', '');
 
+    
     if ($genderPartner === 0) {
         $message2 = '⚣ Не удалось подобрать подходящую пару. ⚢';
     }
 
     else {
+        while ($genderPartner === $secondPartnerGender || $secondPartnerGender === 0) {
+        $secondPartner = $arrayPartner[array_rand($arrayPartner)]['fullname'];
+        $secondPartner = mb_convert_case(($secondPartner), MB_CASE_TITLE, "UTF-8");
+        $secondPartnerGender = getGenderFromName($secondPartner);
+        $secondPartner = getShortName($secondPartner);
+    }
         $message2 = <<<MSG2
         $firstPartner + $secondPartner =
         ♡ Идеально на $randomPercent% ♡
